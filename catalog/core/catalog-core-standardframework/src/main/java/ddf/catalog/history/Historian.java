@@ -16,6 +16,7 @@ package ddf.catalog.history;
 import static ddf.catalog.core.versioning.MetacardVersion.SKIP_VERSIONING;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.common.io.ByteSource;
 import ddf.catalog.content.StorageException;
 import ddf.catalog.content.StorageProvider;
@@ -67,6 +68,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -91,6 +93,18 @@ import org.slf4j.LoggerFactory;
  */
 public class Historian {
   private static final Logger LOGGER = LoggerFactory.getLogger(Historian.class);
+
+  private static final String SKIP_UPDATE_PROPERTY =
+      "org.codice.ddf.history.update.blacklist.metacardTypes";
+
+  private static final String SKIP_DELETE_PROPERTY =
+      "org.codice.ddf.history.deletes.blacklist.metacardTypes";
+
+  private final Set<String> skipUpdateMetacardTypes =
+      Sets.newHashSet(System.getProperty(SKIP_UPDATE_PROPERTY, "").split("\\s*,\\s*"));
+
+  private final Set<String> skipDeleteMetacardTypes =
+      Sets.newHashSet(System.getProperty(SKIP_DELETE_PROPERTY, "").split("\\s*,\\s*"));
 
   private static final Collector<CharSequence, ?, String> TO_A_STRING =
       Collectors.joining(", ", "[", "]");
@@ -159,6 +173,7 @@ public class Historian {
     List<Metacard> inputMetacards =
         updateResponse.getUpdatedMetacards().stream()
             .map(Update::getOldMetacard)
+            .filter(this::isNotBlackListedUpdate)
             .filter(isNotVersionNorDeleted)
             .collect(Collectors.toList());
 
@@ -291,6 +306,7 @@ public class Historian {
    */
   public DeleteResponse version(DeleteResponse deleteResponse)
       throws SourceUnavailableException, IngestException {
+    // skip based on property for deletes
     if (doSkip(deleteResponse)) {
       return deleteResponse;
     }
@@ -302,6 +318,7 @@ public class Historian {
 
     List<Metacard> originalMetacards =
         deleteResponse.getDeletedMetacards().stream()
+            .filter(this::isNotBlackListedDelete)
             .filter(isNotVersionNorDeleted)
             .collect(Collectors.toList());
 
@@ -414,6 +431,14 @@ public class Historian {
     }
 
     return deleteResponse;
+  }
+
+  private boolean isNotBlackListedUpdate(Metacard metacard) {
+    return !skipUpdateMetacardTypes.contains(metacard.getMetacardType().getName());
+  }
+
+  private boolean isNotBlackListedDelete(Metacard metacard) {
+    return !skipDeleteMetacardTypes.contains(metacard.getMetacardType().getName());
   }
 
   public boolean isHistoryEnabled() {
