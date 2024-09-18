@@ -746,7 +746,9 @@
                         <formats>
                             <format>HTML</format>
                             <format>JUNIT</format>
+                            <format>CSV</format>
                         </formats>
+                        <outputDirectory>${project.basedir}/dependency-output</outputDirectory>
                     </configuration>
                 </plugin>
                 <plugin>
