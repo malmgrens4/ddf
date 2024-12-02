@@ -26,7 +26,6 @@ import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.ModelCamelContext;
 import org.apache.camel.model.RouteDefinition;
-import org.apache.camel.model.RoutesDefinition;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,12 +76,12 @@ public abstract class MetacardStorageRoute extends RouteBuilder {
   public void stop(int code) {
     try {
       List<RouteDefinition> routesToRemove = new ArrayList<>();
-      ModelCamelContext context = getContext().adapt(ModelCamelContext.class);
+      ModelCamelContext context =
+          getContext().getCamelContextExtension().getContextPlugin(ModelCamelContext.class);
       for (RouteDefinition routeDefinition : context.getRouteDefinitions()) {
         if (getRouteIds().contains(routeDefinition.getId())) {
           context.getRouteController().stopRoute(routeDefinition.getId());
           routesToRemove.add(routeDefinition);
-          setRouteCollection(new RoutesDefinition());
         }
       }
 

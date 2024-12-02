@@ -44,10 +44,17 @@
         <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
             <artifactId>websocket-servlet</artifactId>
+            <version>9.4.54.v20240208</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
             <artifactId>websocket-common</artifactId>
+            <version>9.4.54.v20240208</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.websocket</groupId>
+            <artifactId>websocket-api</artifactId>
+            <version>9.4.54.v20240208</version>
         </dependency>
     </dependencies>
     <build>
@@ -58,6 +65,9 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Import-Package>
+                            !org.eclipse.jetty
+                        </Import-Package>
                         <Export-Package>
                             org.codice.ddf.security.servlet.web.socket
                         </Export-Package>

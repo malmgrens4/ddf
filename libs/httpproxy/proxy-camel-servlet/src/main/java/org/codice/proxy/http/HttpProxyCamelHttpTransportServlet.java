@@ -28,6 +28,10 @@
  */
 package org.codice.proxy.http;
 
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -35,10 +39,6 @@ import java.io.ObjectOutput;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
@@ -204,7 +204,7 @@ public class HttpProxyCamelHttpTransportServlet extends CamelServlet implements 
     }
 
     // create exchange and set data on it
-    Exchange exchange = new DefaultExchange(consumer.getEndpoint(), ExchangePattern.InOut);
+    Exchange exchange = new DefaultExchange(camelContext, ExchangePattern.InOut);
 
     if (consumer.getEndpoint().isBridgeEndpoint()) {
       exchange.setProperty(Exchange.SKIP_GZIP_ENCODING, Boolean.TRUE);
@@ -277,7 +277,6 @@ public class HttpProxyCamelHttpTransportServlet extends CamelServlet implements 
     return (ServletEndpoint) consumer.getEndpoint();
   }
 
-  @Override
   protected HttpConsumer resolve(HttpServletRequest request) {
     String path = request.getPathInfo();
     log.trace("Request path is: {}", LogSanitizer.sanitize(path));

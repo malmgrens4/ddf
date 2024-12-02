@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.UUID;
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.aws2.s3.AWS2S3Constants;
-import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.support.DefaultRegistry;
 import org.apache.camel.support.SimpleRegistry;
 import org.apache.commons.lang3.StringUtils;
@@ -91,7 +90,7 @@ public class MetacardS3StorageRoute extends MetacardStorageRoute {
     super(camelContext);
     registry = new SimpleRegistry();
     DefaultRegistry defaultRegistry = new DefaultRegistry(camelContext.getRegistry(), registry);
-    ((DefaultCamelContext) camelContext).setRegistry(defaultRegistry);
+    camelContext.getCamelContextExtension().setRegistry(defaultRegistry);
   }
 
   public String getObjectTemplate() {

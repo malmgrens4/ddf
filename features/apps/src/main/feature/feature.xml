@@ -30,7 +30,7 @@
         <feature>kernel</feature>
         <feature>cxf</feature>
         <feature>camel</feature>
-        <feature>camel-cxf</feature>
+<!--        <feature>camel-cxf</feature>-->
         <feature>security-core-api</feature>
         <feature>war</feature>
         <feature>ddf-branding</feature>

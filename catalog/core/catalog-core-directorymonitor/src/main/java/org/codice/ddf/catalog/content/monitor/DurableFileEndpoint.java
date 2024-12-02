@@ -18,6 +18,7 @@ import static ddf.catalog.Constants.CDM_LOGGER_NAME;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import org.apache.camel.Category;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.component.file.FileConsumer;
@@ -42,8 +43,7 @@ import org.slf4j.LoggerFactory;
     scheme = "durable",
     title = "Durable File Endpoint",
     syntax = "durable:directoryName",
-    consumerClass = AbstractDurableFileConsumer.class,
-    label = "codice,file")
+    category = Category.FILE)
 public class DurableFileEndpoint extends FileEndpoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CDM_LOGGER_NAME);

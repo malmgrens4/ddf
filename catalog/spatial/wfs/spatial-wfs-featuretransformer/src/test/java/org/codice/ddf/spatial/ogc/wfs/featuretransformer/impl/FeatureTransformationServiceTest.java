@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
-import org.apache.camel.ExtendedCamelContext;
 import org.apache.camel.builder.NoErrorHandlerBuilder;
 import org.apache.camel.component.bean.ProxyHelper;
 import org.apache.camel.impl.DefaultCamelContext;
@@ -65,9 +64,7 @@ public class FeatureTransformationServiceTest {
     this.camelContext = new DefaultCamelContext(registry);
     camelContext.setTracing(true);
     camelContext.addRoutes(new WfsRouteBuilder());
-    camelContext
-        .adapt(ExtendedCamelContext.class)
-        .setErrorHandlerFactory(new NoErrorHandlerBuilder());
+    camelContext.getCamelContextExtension().setErrorHandlerFactory(new NoErrorHandlerBuilder());
 
     Endpoint endpoint = camelContext.getEndpoint(WfsRouteBuilder.FEATURECOLLECTION_ENDPOINT_URL);
     featureTransformationService =

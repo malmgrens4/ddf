@@ -226,7 +226,9 @@ public class ContentDirectoryMonitor implements DirectoryMonitor {
         camelContext.getRouteController().stopRoute(routeId);
         boolean status = camelContext.removeRoute(routeId);
         LOGGER.trace("Status of removing route {} is {}", routeId, status);
-        camelContext.adapt(ModelCamelContext.class).removeRouteDefinition(routeDef);
+        ModelCamelContext modelCamelContext =
+            camelContext.getCamelContextExtension().getContextPlugin(ModelCamelContext.class);
+        modelCamelContext.removeRouteDefinition(routeDef);
       } catch (Exception e) {
         LOGGER.debug("Unable to stop Camel route with route ID = {}", routeDef.getId(), e);
       }
@@ -444,7 +446,10 @@ public class ContentDirectoryMonitor implements DirectoryMonitor {
   private void dumpCamelContext(String msg) {
     LOGGER.debug("\n\n***************  START: {}  *****************", msg);
     List<RouteDefinition> routeDefinitions =
-        camelContext.adapt(ModelCamelContext.class).getRouteDefinitions();
+        camelContext
+            .getCamelContextExtension()
+            .getContextPlugin(ModelCamelContext.class)
+            .getRouteDefinitions();
     if (routeDefinitions != null) {
       LOGGER.debug("Number of routes = {}", routeDefinitions.size());
       for (RouteDefinition routeDef : routeDefinitions) {
