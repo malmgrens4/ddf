@@ -46,11 +46,7 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
         </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.15.0</version>
-        </dependency>
+
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -75,6 +71,11 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>osgi.core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.15.0</version>
         </dependency>
 
         <!-- test dependencies -->
@@ -118,7 +119,7 @@
                         </Embed-Dependency>
                         <Import-Package>
                             !com.sun.management,
-                            !commons.io,
+                            !org.apache.commons.io,
                             *
                         </Import-Package>
                     </instructions>
