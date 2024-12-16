@@ -66,7 +66,6 @@ import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Collection;
@@ -1916,7 +1915,7 @@ public class TestCatalog extends AbstractIntegrationTest {
 
   private String getDefaultExpirationAsString() {
     final DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'+00:00'");
-    format.setTimeZone(TimeZone.getTimeZone(ZoneId.of("Z")));
+    format.setTimeZone(TimeZone.getTimeZone(ZoneOffset.UTC));
     final Date defaultExpiration =
         Date.from(OffsetDateTime.of(2020, 2, 2, 2, 2, 2, 0, ZoneOffset.UTC).toInstant());
     return format.format(defaultExpiration);

@@ -886,7 +886,7 @@ public class MetacardImpl implements Metacard {
 
         if (attributeDescriptor != null && attribute.getValue() != null) {
           attributeDescriptor.getType().getAttributeFormat();
-          attributeDescriptor.getType().getClass();
+          //          attributeDescriptor.getType().getClass();
         }
       }
 

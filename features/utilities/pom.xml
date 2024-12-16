@@ -128,7 +128,7 @@
         <!-- BEGIN: Tika dependencies -->
         <dependency>
             <groupId>org.apache.tika</groupId>
-            <artifactId>tika-bundle</artifactId>
+            <artifactId>tika-bundle-standard</artifactId>
             <version>${tika.version}</version>
         </dependency>
         <dependency>
@@ -215,7 +215,7 @@
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-jts-wrapper</artifactId>
-			<version>${org.geotools.version}</version>
+			<version>${old.org.geotools.version}</version>
 		</dependency>
         <dependency>
             <groupId>org.geotools</groupId>

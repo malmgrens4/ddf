@@ -89,6 +89,7 @@
                             <!-- Crypter dependencies must be embedded in this bundle -->
                             json,
                             protobuf-java,
+                            conscrypt,
                             tink
                         </Embed-Dependency>
                         <Import-Package>
@@ -100,7 +101,9 @@
                             <!-- END -->
                             <!-- BEGIN: Exclude packages from embedded dependencies -->
                             !com.google.protobuf.*,
+                            !com.google.code.gson.*,
                             !org.json.*,
+                            !org.conscrypt.*,
                             <!-- END -->
                             *
                         </Import-Package>

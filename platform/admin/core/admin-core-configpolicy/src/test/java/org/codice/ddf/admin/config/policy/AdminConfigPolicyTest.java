@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 
 public class AdminConfigPolicyTest {
@@ -230,15 +231,13 @@ public class AdminConfigPolicyTest {
   public KeyValueCollectionPermission getSubjectPermissions() {
     KeyValueCollectionPermission subjectCollectionPermissions =
         new KeyValueCollectionPermissionImpl();
-    subjectCollectionPermissions.addAll(
-        new HashMap<String, List<String>>() {
-          {
-            for (int i = 0; i < 3; i++) {
-              put(TEST_ATTRIBUTE_NAME + i, Arrays.asList(TEST_ATTRIBUTE_VALUE + i));
-            }
-          }
-        });
+    Map<String, List<String>> subjectCollection = new HashMap<>();
 
+    for (int i = 0; i < 3; i++) {
+      subjectCollection.put(TEST_ATTRIBUTE_NAME + i, Arrays.asList(TEST_ATTRIBUTE_VALUE + i));
+    }
+
+    subjectCollectionPermissions.addAll(subjectCollection);
     return subjectCollectionPermissions;
   }
 

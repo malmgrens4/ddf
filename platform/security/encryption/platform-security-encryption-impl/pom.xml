@@ -69,6 +69,7 @@
                             !com.google.api.*,
                             !org.joda.time.*,
                             !sun.misc.*,
+                            !org.conscrypt.*
                             *
                         </Import-Package>
                         <Export-Package />

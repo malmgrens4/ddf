@@ -1169,7 +1169,7 @@ public class PredicateTest {
       for (Character specialChar : ContextualTokenizer.SPECIAL_CHARACTERS_SET) {
         String phrase = String.format(term, specialChar);
         for (Character differentSpecialChar : ContextualTokenizer.SPECIAL_CHARACTERS_SET) {
-          if (specialChar != differentSpecialChar) {
+          if (!specialChar.equals(differentSpecialChar)) {
             String metadata =
                 String.format(
                     METADATA_FORMAT,
